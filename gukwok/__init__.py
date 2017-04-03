@@ -4,6 +4,8 @@
 """
 
 from gukwok import web
+from gukwok._version import __version__
 
-__version__ = '0.1'
-
+__all__ = (
+    'web',
+    '__version__')
