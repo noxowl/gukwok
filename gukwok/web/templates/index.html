@@ -1,4 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
-<h1>Gukwok - 궇궋/あい</h1>
+<form action="{{ url_for('result')}}" method=post>
+    <dl>
+        <dt>Request:
+        <dd><input type=text name=request>
+        <dd><input type=submit value=convert>
+    </dl>
+</form>
 {% endblock %}

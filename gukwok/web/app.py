@@ -16,6 +16,7 @@ app = Flask(__name__, template_folder='templates')
 def bad_request(error):
     return make_response(jsonify({'message': 'bad request'}), 400)
 
+
 @app.errorhandler(413)
 def bad_request(error):
     return make_response(jsonify({'message': 'payload too large'}), 413)
@@ -24,6 +25,11 @@ def bad_request(error):
 @app.route('/')
 def index():
     """gukwok index page"""
+    return render_template('index.html')
+
+
+@app.route('/result')
+def result():
     return render_template('index.html')
 
 
