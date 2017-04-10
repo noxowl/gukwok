@@ -1,10 +1,47 @@
 {% extends "base.html" %}
-{% block body %}
-<form action="{{ url_for('result')}}" method=post>
-    <dl>
-        <dt>Request:
-        <dd><input type=text name=request>
-        <dd><input type=submit value=convert>
-    </dl>
+
+{% block enc_left %}
+<label class="btn btn-enc">
+    <input type="radio" name="dst_encoding" id="euc-kr">EUC-KR
+</label>
+<label class="btn btn-enc">
+    <input type="radio" name="src_encoding" id="shift-jis">Shift-JIS
+</label>
+<button name="switch">encoding switch</button>
+{% endblock %}
+
+{% block enc_right %}
+<label class="btn btn-enc">
+    <input type="radio" name="dst_encoding" id="shift-jis">Shift-JIS
+</label>
+<label class="btn btn-enc">
+    <input type="radio" name="dst_encoding" id="euc-kr">EUC-KR
+</label>
+{% endblock %}
+
+
+{% block src %}
+<form action="" method="post">
+    {{ form.csrf }}
+
+    <div class="input text">
+        {{ form.source.label }} {{ form.source }}
+    </div>
+
+    <div class="input submit">
+        <input type="submit" value="Convert" />
+    </div>
 </form>
+{% endblock %}
+
+{% block dst %}
+    {% with results = get_flashed_messages(with_categories=true) %}
+        {% if results %}
+            <span id="result_box">
+                {% for result in results %}
+                    <span>{{ result[1] }}</span>
+                {% endfor %}
+            </span>
+        {% endif %}
+    {% endwith %}
 {% endblock %}

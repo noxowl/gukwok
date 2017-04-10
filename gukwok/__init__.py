@@ -4,8 +4,12 @@
 """
 
 from gukwok import web
-from gukwok._version import __version__
+from gukwok import converter
+from gukwok._version import __version__, legacy_version
 
 __all__ = (
     'web',
-    '__version__')
+    'converter',
+    '__version__',
+    'legacy_version')
+

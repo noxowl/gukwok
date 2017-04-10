@@ -1,16 +1,21 @@
 from flask import abort
+from wtforms import Form, TextField, validators
 from hannakageul import convert as kageul
 
 
-__all__ = ('codec')
+__all__ = ('codec', 'ConvertForm')
 
 
 def codec(source, target, request):
-    processor = char_processor.get_encoder(source)
+    processor = CharProcessor.get_encoder(source)
     return processor.decode_to(target, request)
 
 
-class char_processor(object):
+class ConvertForm(Form):
+    source = TextField('source:', validators=[validators.required()])
+
+
+class CharProcessor(object):
     encoders = None
 
     def __init__(self, encoder_name):
@@ -52,13 +57,13 @@ class char_processor(object):
         return self.encoders[encoder_name]
 
 
-class euccn_processor(char_processor):
+class EuccnProcessor(CharProcessor):
     def __init__(self):
         """
 
         :param encoder_name:
         """
-        super(euccn_processor, self).__init__('euccn')
+        super(EuccnProcessor, self).__init__('euccn')
         self.encoder_name = 'euccn'
 
     def euccn(self, request):
@@ -80,13 +85,13 @@ class euccn_processor(char_processor):
         return kageul.euccn.utf8(request)
 
 
-class eucjp_processor(char_processor):
+class EucjpProcessor(CharProcessor):
     def __init__(self):
         """
 
         :param encoder_name:
         """
-        super(eucjp_processor, self).__init__('eucjp')
+        super(EucjpProcessor, self).__init__('eucjp')
         self.encoder_name = 'eucjp'
 
     def euccn(self, request):
@@ -108,13 +113,13 @@ class eucjp_processor(char_processor):
         return kageul.eucjp.utf8(request)
 
 
-class euckr_processor(char_processor):
+class EuckrProcessor(CharProcessor):
     def __init__(self):
         """
 
         :param encoder_name:
         """
-        super(euckr_processor, self).__init__('euckr')
+        super(EuckrProcessor, self).__init__('euckr')
         self.encoder_name = 'euckr'
 
     def euccn(self, request):
@@ -136,13 +141,13 @@ class euckr_processor(char_processor):
         return kageul.euckr.utf8(request)
 
 
-class jis_processor(char_processor):
+class JisProcessor(CharProcessor):
     def __init__(self):
         """
 
         :param encoder_name:
         """
-        super(jis_processor, self).__init__('jis')
+        super(JisProcessor, self).__init__('jis')
         self.encoder_name = 'jis'
 
     def euccn(self, request):
@@ -164,13 +169,13 @@ class jis_processor(char_processor):
         return kageul.jis.utf8(request)
 
 
-class sjis_processor(char_processor):
+class SjisProcessor(CharProcessor):
     def __init__(self):
         """
 
         :param encoder_name:
         """
-        super(sjis_processor, self).__init__('sjis')
+        super(SjisProcessor, self).__init__('sjis')
         self.encoder_name = 'sjis'
 
     def euccn(self, request):
@@ -192,13 +197,13 @@ class sjis_processor(char_processor):
         return kageul.sjis.utf8(request)
 
 
-class utf8_processor(char_processor):
+class Utf8Processor(CharProcessor):
     def __init__(self):
         """
 
         :param encoder_name:
         """
-        super(utf8_processor, self).__init__('utf8')
+        super(Utf8Processor, self).__init__('utf8')
         self.encoder_name = 'utf8'
 
     def euccn(self, request):
