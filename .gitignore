@@ -34,3 +34,6 @@ virtualenv/
 *.egg-info
 *.pyc
 *.tmp
+css/
+*.css
+*.css.map

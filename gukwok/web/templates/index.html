@@ -1,47 +1,62 @@
 {% extends "base.html" %}
 
-{% block enc_left %}
-<label class="btn btn-enc">
-    <input type="radio" name="dst_encoding" id="euc-kr">EUC-KR
-</label>
-<label class="btn btn-enc">
-    <input type="radio" name="src_encoding" id="shift-jis">Shift-JIS
-</label>
-<button name="switch">encoding switch</button>
-{% endblock %}
+{% block convert_form %}
+<form class="pure-form" action="" method="post">
+        {{ form.csrf }}
+        <div class="pure-u-1-2">
+        <div class="enc-left">
+        <fieldset id="src_enc" class="pure-button-group">
+            <input type="radio" name="src_enc" id="src_euckr" value="euckr" checked="checked">
+                <label for="src_euckr" class="pure-button">EUC-KR</label>
+            <input type="radio" name="src_enc" id="src_sjis" value="sjis">
+                <label for="src_sjis" class="pure-button">Shift-JIS</label>
+            <input type="radio" name="src_enc" id="src_utf8" value="utf8">
+                <label for="src_utf8" class="pure-button">UTF-8</label>
+            <input class="pure-button submit-button" type="button" value="⇄">
+        </fieldset>
+        </div>
+        </div>
 
-{% block enc_right %}
-<label class="btn btn-enc">
-    <input type="radio" name="dst_encoding" id="shift-jis">Shift-JIS
-</label>
-<label class="btn btn-enc">
-    <input type="radio" name="dst_encoding" id="euc-kr">EUC-KR
-</label>
-{% endblock %}
+        <div class="pure-u-1-2">
+        <div class="enc-right">
+        <fieldset id="dst_enc" class="pure-button-group">
+            <input type="radio" name="dst_enc" id="dst_sjis" value="sjis" checked="true">
+                <label for="dst_sjis" class="pure-button">Shift-JIS</label>
+            <input type="radio" name="dst_enc" id="dst_euckr" value="euckr">
+                <label for="dst_euckr" class="pure-button">EUC-KR</label>
+            <input type="radio" name="dst_enc" id="dst_utf8" value="utf8">
+                <label for="dst_utf8" class="pure-button">UTF-8</label>
+            <input class="pure-button submit-button" type="submit" value="Convert" />
+        </fieldset>
+        </div>
+        </div>
 
-
-{% block src %}
-<form action="" method="post">
-    {{ form.csrf }}
-
-    <div class="input text">
-        {{ form.source.label }} {{ form.source }}
+    <div class="pure-u-1-2">
+    <div class="enc-left">
+        <div class="gukwok-src">
+            <div class="input-text" contentEditable>
+                {{ form.source_box(cols=1, wrap="soft") }}
+            </div>
+        </div>    
+    </div>
     </div>
 
-    <div class="input submit">
-        <input type="submit" value="Convert" />
+    <div class="pure-u-1-2">
+    <div class="enc-right">
+        <div class="gukwok-dst">
+            <div class="result-text">
+                <div id="result_box">
+                    {% with results = get_flashed_messages(with_categories=true) %}
+                    {% if results %}
+                        {% for result in results %}    
+                        <div class="result-article">{{ result[1] }}</div>
+                        {% endfor %}                    
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
     </div>
 </form>
-{% endblock %}
-
-{% block dst %}
-    {% with results = get_flashed_messages(with_categories=true) %}
-        {% if results %}
-            <span id="result_box">
-                {% for result in results %}
-                    <span>{{ result[1] }}</span>
-                {% endfor %}
-            </span>
-        {% endif %}
-    {% endwith %}
 {% endblock %}

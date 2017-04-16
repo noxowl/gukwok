@@ -1,18 +1,19 @@
 from flask import abort
-from wtforms import Form, TextField, validators
+from wtforms import Form, TextAreaField, validators
 from hannakageul import convert as kageul
 
 
 __all__ = ('codec', 'ConvertForm')
 
 
-def codec(source, target, request):
-    processor = CharProcessor.get_encoder(source)
-    return processor.decode_to(target, request)
+def codec(src, dst, request):
+    processor = CharProcessor.get_encoder(src)
+    return processor.decode_to(dst, request)
 
 
 class ConvertForm(Form):
-    source = TextField('source:', validators=[validators.required()])
+    source_box = TextAreaField('source_box:', validators=[validators.required(),
+        validators.length(max=500)])
 
 
 class CharProcessor(object):

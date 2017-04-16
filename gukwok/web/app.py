@@ -3,6 +3,7 @@
 """
 
 from packaging.version import Version, LegacyVersion
+from sassutils.wsgi import SassMiddleware
 from flask import Flask, current_app, request, url_for, render_template,\
                     abort, make_response, jsonify, redirect, flash
 from wtforms import Form, TextField, TextAreaField, validators,\
@@ -14,6 +15,10 @@ import gukwok
 
 app = Flask(__name__, template_folder='templates')
 app.config['SECRET_KEY'] = ''
+
+app.wsgi_app = SassMiddleware(app.wsgi_app, {
+    'gukwok.web': ('static/sass', 'static/css', '/static/css')
+})
 
 def is_legacy(version):
     return Version(version) < Version(legacy_version)
@@ -33,13 +38,15 @@ def index():
     """gukwok index page"""
     form = gukwok.converter.ConvertForm(request.form)
 
-    print("error " + str(form.errors))
     if request.method == 'POST':
-        source = request.form['source']
+        source = request.form['source_box']
+        src_enc = request.form['src_enc']
+        dst_enc = request.form['dst_enc']
         print(source)
+        print(src_enc + ', ' + dst_enc)
 
         if form.validate():
-            flash(gukwok.converter.codec('euckr', 'sjis', source))
+            flash(gukwok.converter.codec(src_enc, dst_enc, source))
         else:
             flash('source required.')
     return render_template('index.html', form=form)

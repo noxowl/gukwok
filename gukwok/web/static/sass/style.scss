@@ -1,0 +1,82 @@
+@import "_purecss";
+
+h1 {
+    padding: 20px;
+}
+
+textarea {
+    resize: none;
+}
+
+.grids-main {
+    position: absolute;
+    padding: 20px;
+}
+
+.gukwok-src, .gukwok-dst {
+    position: absolute;
+    width: 100%;
+    padding-top: 10px;
+}
+
+.input-text, .result-text {
+    font-size: 35px;
+}
+
+#source_box {
+    width: 100%;
+    min-height: 5em;
+    font-size: 35px;
+}
+
+#result_box {
+    width: 100%;
+    min-height: 5em;
+    max-height: 5em;
+    font-size: 35px;
+    padding: 0.5em 0.6em;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    word-wrap: break-word;
+    overflow: auto;
+}
+
+.result-article {
+    padding-top: 0.3em;
+    width: 100%;
+    word-wrap: break-word; 
+}
+
+.enc-left {
+    float: left;
+    position: relative;
+    margin-right: 10px;
+    width: 100%;
+}
+
+.enc-right {
+    float: left;
+    position: relative;
+    margin-left: 10px;
+    width: 100%;
+}
+
+.submit-button {
+    float: right;
+}
+
+label {
+    position: relative;
+    cursor: pointer;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+[type="radio"]:checked + label {
+    @extend .pure-button-active;
+}
