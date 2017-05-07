@@ -68,14 +68,14 @@ def api_index(version):
 
 
 @app.route('/api/<version>/<source>/<target>/', methods=["GET"])
-def converter_null(source, target):
+def converter_null(version, source, target):
     if is_legacy(version):
         abort(416)
     abort(400)
 
 
 @app.route('/api/<version>/<source>/<target>/<request>', methods=["GET"])
-def converter(source, target, request):
+def converter(version, source, target, request):
     if is_legacy(version):
         abort(416)
     print(len(request))
