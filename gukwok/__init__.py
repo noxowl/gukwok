@@ -12,4 +12,3 @@ __all__ = (
     'converter',
     '__version__',
     'legacy_version')
-

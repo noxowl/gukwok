@@ -67,14 +67,14 @@ def api_index(version):
         {'message': 'index of api'})
 
 
-@app.route('/api/<version>/source>/<target>/', methods=["GET"])
+@app.route('/api/<version>/<source>/<target>/', methods=["GET"])
 def converter_null(source, target):
     if is_legacy(version):
         abort(416)
     abort(400)
 
 
-@app.route('/api/<version>/source>/<target>/<request>', methods=["GET"])
+@app.route('/api/<version>/<source>/<target>/<request>', methods=["GET"])
 def converter(source, target, request):
     if is_legacy(version):
         abort(416)
