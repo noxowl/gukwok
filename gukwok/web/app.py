@@ -14,7 +14,7 @@ import gukwok
 
 
 app = Flask(__name__, template_folder='templates')
-app.config['SECRET_KEY'] = ''
+app.config.from_pyfile('../config.py')
 
 app.wsgi_app = SassMiddleware(app.wsgi_app, {
     'gukwok.web': ('static/sass', 'static/css', '/static/css')
@@ -69,6 +69,8 @@ def api_index(version):
 
 @app.route('/api/<version>/source>/<target>/', methods=["GET"])
 def converter_null(source, target):
+    if is_legacy(version):
+        abort(416)
     abort(400)
 
 
