@@ -16,9 +16,6 @@ import gukwok
 app = Flask(__name__, template_folder='templates')
 app.config.from_pyfile('../config.py')
 
-app.wsgi_app = SassMiddleware(app.wsgi_app, {
-    'gukwok.web': ('static/sass', 'static/css', '/static/css')
-})
 
 def is_legacy(version):
     return Version(version) < Version(legacy_version)
