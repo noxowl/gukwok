@@ -27,6 +27,7 @@ venv/
 .venv/
 ENV/
 virtualenv/
+.env
 
 # Custom #
 ##########
@@ -37,3 +38,4 @@ virtualenv/
 css/
 *.css
 *.css.map
+config.py
